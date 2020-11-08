@@ -1,0 +1,11 @@
+[Unit]
+Description=Dinamic DNS service by BIT Net studio
+After=network-online.target
+
+[Service]
+ExecStart=/bin/sh -- /home/bandicm/dynamic_dns/dinamic_dns.sh
+ExecStop=/bin/sh -- sudo kill /home/bandicm/dynamic_dns/dinamic_dns.sh
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
