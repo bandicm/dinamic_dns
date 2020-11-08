@@ -27,11 +27,9 @@ void add_ip_in_A();
 int main () {
     read_domain();
 	logs(1);
-    while (1) {			
-        if (!(strlen(old_ip))) {		
-			get_old_ip();
-			logs(2);
-		}
+    while (1) {		
+		get_old_ip();
+		logs(2);
 		get_new_ip_txt();
 		logs(3);
         if (strcmp(new_ip, old_ip)) {
@@ -39,10 +37,9 @@ int main () {
             logs(4);
             system("rndc reload");
 			logs(5);
-			strcpy(old_ip, new_ip);
         }
         logs(6);
-        sleep(600); // 10 minutes
+        sleep(300); // 5 minutes
 	}
     return 0;
 }
@@ -74,7 +71,7 @@ void logs(int a) {
 			break;
 		}
 		case 2: {
-			strcat(log, " Loading previous IP from file... ");
+			strcat(log, " Loading previous IP... ");
 			strcat(log, old_ip);
 			break;
 		}
@@ -121,11 +118,20 @@ void read_domain(){
 
 void get_old_ip() {			
     FILE *f;
-    f = fopen("wan_ip", "r");
-    if (f==NULL) exit(3);
-    read_files(f, old_ip);
-    fclose(f);
+    char command[100];
+    strcpy(command, "dig ");
+    strcat(command, domain_A);
+    strcat(command, " @localhost +short > dns_ip");
+    
+	do {
+		system(command);
+		f = fopen("dns_ip", "r");
+		if (f==NULL) exit(4);
+		read_files(f, old_ip);
+		fclose(f);
+	} while(!(strcmp(old_ip, ";; connection timed out; no servers could be reached") && strlen(old_ip)));
 }
+
 
 void get_new_ip_txt() {
 	FILE *f;
@@ -137,6 +143,7 @@ void get_new_ip_txt() {
 		fclose(f);
 	} while(!(strcmp(new_ip, ";; connection timed out; no servers could be reached") && strlen(new_ip)));
 }
+
 
 void add_ip_in_A() {
     char record[100];
