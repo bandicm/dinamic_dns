@@ -13,10 +13,15 @@ hosts.conf file since the override in the bind9 configuration.
 
 ## Development information
 
-This program is on v0.2-beta version. Changes to version v0.1:
+### This program is on v0.2-beta version. Changes to version v0.1:
 - Supports logs in real time
 - Fixed errors that occurred while writing to the zone file.
 - Add a logging function. For easier monitoring of program status.
 - Enable additional functions to read configuration files for domain and host file. Because of this the program can now work for any domain or location of the host file without editing the code or compiling the program.
 - The function to retrieve the new IP address has now been upgraded and should prevent the program from crashing due to non-response from the server.
 - The function for converting the IP address in the host file has been improved.
+
+### V0.3-beta Changes to version v0.1
+
+- Upgrade function to read previous IP address. Reading is done from the local DNS server. This update fixes the problem of crashing the program when the retrieval function of the current address does not receive a response, i.e. when it loads an empty wan_ip file. And requires an additional dns_ip file.
+- Added file to configure this program as a linux service. The program now starts at startup.
