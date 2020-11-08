@@ -21,7 +21,7 @@ hosts.conf file since the override in the bind9 configuration.
 - The function to retrieve the new IP address has now been upgraded and should prevent the program from crashing due to non-response from the server.
 - The function for converting the IP address in the host file has been improved.
 
-### V0.3-beta Changes to version v0.1
+### V0.3-beta Changes to version v0.2-beta
 
 - Upgrade function to read previous IP address. Reading is done from the local DNS server. This update fixes the problem of crashing the program when the retrieval function of the current address does not receive a response, i.e. when it loads an empty wan_ip file. And requires an additional dns_ip file.
 - Added file to configure this program as a linux service. The program now starts at startup.
